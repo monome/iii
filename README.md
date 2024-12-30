@@ -40,7 +40,7 @@ practically speaking: the grid is a very constrained device when it comes to use
 
 ## firmwares
 
-- Download the [most recent firmware for your specific device][https://github.com/monome/iii/releases] (grids from 2022 have a different LED driver and hence require a different firmware. identify the PCB revision by checking the date on the corner).
+- Download the [most recent firmware for your specific device](https://github.com/monome/iii/releases) (grids from 2022 have a different LED driver and hence require a different firmware. identify the PCB revision by checking the date on the corner).
 - Remove the bottom screws.
 - Locate the golden pushbutton near the USB port. Hold it down while connecting the grid to a computer.
 - A USB drive will enumerate. Download the appropriate firmware listed below and copy the file to this drive. The drive will unmount immediately upon copying the file (on macOS this may cause a benign alert).
