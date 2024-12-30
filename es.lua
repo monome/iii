@@ -1,4 +1,6 @@
-print("earthsea?")
+print("early earthsea")
+print("- left column sets midi channel")
+
 grid_led_all(0)
 grid_led(0,0,3)
 grid_refresh()

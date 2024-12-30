@@ -150,10 +150,86 @@ pt(table_to_print)
 
 ### grid
 
+```
+function grid(x,y,z) -- callback for grid keypresses. example to print key data:
+  ps("grid %d %d %d",x,y,z)
+end
+```
+
+`grid_led_all` and `grid_led` queue LED state changes which will be seen with the next `grid_refresh`
+
 ### midi
+
+`midi_rx` is the callback for raw bytes sent to the usb-midi port. note that the first byte has the channel and status separated out in advance. maybe this is weird and we'll change it. we will add some message type lookups similar to norns.
+
+`midi_tx` sends bytes over usb-midi. `midi_note_on`, `midi_note_off`, and `midi_cc` are helper functions so you don't need to remember the midi protocol. we'll add more of these helpers for other midi messages.
 
 ### metro
 
+`metro(index,stage)` is the one callback for timed metronome objects. right now the system supports 8 metros (we need to stress-test stability). separate actions should happen per index, ie:
+
+```
+function metro(index,stage)
+  if(index==1) then print("hi")
+  else print("bye") end
+end
+```
+
+set and start a metro with `metro_set(index, time, stages)`.
+
+- if `stages` is omitted or set to -1 the metro will repeat indefinitely.
+- if `time` is set to 0 the timer will be stopped (if running)
+
 ### flash
 
+4k sized blocks can be read, written, and cleared. each block is referenced with an index. we haven't defined an upper limit as the user flash occupies the end of the memory map. (we'll clarify this later).
+
+the flash can be used arbitrarily, though we expect it to be most useful for presets or similar.
+
+```
+cmd = "print('hello world i am in the flash!')"
+flash_write(0,cmd) -- this will now survive power cycling
+(...)
+cmd = flash_read(0)
+dostring(cmd) -- prints the message!
+```
+
+TODO: we need to add a table serializer. because flash is just blocks of bytes (text). ie:
+
+```
+x = {20,22,26,29}
+preset = table_serialize(x) -- preset now is the string "{20,22,26,29}" 
+flash_write(0,preset)
+(...)
+x = dostring(flash_read(0)) -- recall a preset
+```
+
 ### utils
+
+`dostring(cmd)` executes the string cmd. be careful.
+
+`ps(formatted_string,...)` is a helper to give `printf` capabilities, for example:
+
+```
+ps("i am %s and i like the number %d", "awake", 3) -- "i am awake and i like the number 3"
+```
+
+`pt(table)` attempts to print a table nicely.
+
+
+
+## TODO
+
+- grid id and size query
+- midi helpers
+  - send
+  - receive
+  - clock division
+- table serializer ie http://lua-users.org/wiki/TableSerialization
+
+
+## contributing
+
+small lua tests and doc fixes welcome.
+
+discussion happens at the [repository](https://github.com/monome/iii/discussions)

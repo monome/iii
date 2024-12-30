@@ -1,13 +1,16 @@
 print("step")
 
+-- change this to toggle clock input:
+midi_clock_in = false
+
+-- change these for different notes:
+map = {66,68,70,72,74,76,78,80,82,84,86,88,90,92,94,96}
+
 ch = 0
 step = 1
 last = 0
 note = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}
-map = {66,68,70,72,74,76,78,80,82,84,86,88,90,92,94,96}
-
--- change this to toggle clock input:
-midi_clock_in = true
+ticks = 0
 
 tick = function()
 	if last > 0 then midi_note_off(map[last]) end
@@ -44,8 +47,6 @@ redraw = function()
 	grid_refresh()
 end
 
-ticks = 0
-
 midi_rx = function(d1,d2,d3,d4)
 	if d1==8 and d2==240 then
 		ticks = ((ticks + 1) % 12)
@@ -55,6 +56,8 @@ midi_rx = function(d1,d2,d3,d4)
 	end
 end
 
+
+-- begin
 
 if not midi_clock_in then
 	-- 150ms per step
