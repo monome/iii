@@ -233,3 +233,5 @@ ps("i am %s and i like the number %d", "awake", 3) -- "i am awake and i like the
 small lua tests and doc fixes welcome.
 
 discussion happens at the [repository](https://github.com/monome/iii/discussions)
+
+_note_ this repository is not for the firmware itself, which we have not yet determined how/if to license.
