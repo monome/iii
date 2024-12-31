@@ -210,6 +210,8 @@ x = dostring(flash_read(0)) -- recall a preset
 
 `dostring(cmd)` executes the string cmd. be careful.
 
+`get_time()` returns time since boot in ms. helpful for measuring intervals.
+
 `ps(formatted_string,...)` is a helper to give `printf` capabilities, for example:
 
 ```
@@ -232,7 +234,7 @@ ps("i am %s and i like the number %d", "awake", 3) -- "i am awake and i like the
 
 ## contributing
 
-small lua tests and doc fixes welcome.
+small lua tests and doc fixes welcome. also suggestions for inclusion in the core library (which is compiled into the firmeware).
 
 discussion happens at the [repository](https://github.com/monome/iii/discussions)
 
