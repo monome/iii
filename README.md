@@ -65,8 +65,7 @@ To change the mode, hold down key 0,0 (top left) while powering up the device. I
 
 ## diii
 
-A terminal text interface for iii devices, based on [druid](https://monome.org/docs/crow/druid/).  
-Send commands, get text feedback, and upload scripts.
+A terminal text interface for iii devices, based on [druid](https://monome.org/docs/crow/druid/). Send commands, get text feedback, and upload scripts. See the source [here](https://github.com/monome/diii).
 
 ### install
 
