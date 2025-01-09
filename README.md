@@ -146,10 +146,12 @@ flash_clear(index)
 -- utils
 dostring()
 get_time()
-
--- print utils
 ps(formatted_string,...)
 pt(table_to_print)
+clamp(n,min,max)
+round(number,quant)
+linlin(slo,shi,dlo,dhi,f)
+wrap(n,min,max)
 ```
 
 ### grid
@@ -160,7 +162,7 @@ function grid(x,y,z) -- callback for grid keypresses. example to print key data:
 end
 ```
 
-`grid_led_all` and `grid_led` queue LED state changes which will be seen with the next `grid_refresh`.
+`grid_led_all` and `grid_led` queue LED state changes which will be seen with the next `grid_refresh`. All 1-indexed.
 
 ### midi
 
@@ -210,17 +212,25 @@ x = dostring(flash_read(0)) -- recall a preset
 
 ### utils
 
-`dostring(cmd)` executes the string cmd. be careful.
+`dostring(cmd)` executes the string cmd. *Be careful.*
 
-`get_time()` returns time since boot in ms. helpful for measuring intervals.
+`get_time()` returns time since boot in milliseconds. Helpful for measuring intervals.
 
-`ps(formatted_string,...)` is a helper to give `printf` capabilities, for example:
+`ps(formatted_string,...)` is a helper to give `printf` capabilities, For example:
 
 ```
 ps("i am %s and i like the number %d", "awake", 3) -- "i am awake and i like the number 3"
 ```
 
 `pt(table)` attempts to print a table nicely.
+
+`clamp(n,min,max)` clamps value `n` between a `min` and `max`.
+
+`round(number,quant)` rounds to a multiple of a `number` with `quant` precision.
+
+`linlin(slo,shi,dlo,dhi,f)` linearly maps value `f` from one range to another range.
+
+`wrap(n.min.max)` wraps integer `n` to a positive `min`/`max` range.
 
 
 ## TODO
