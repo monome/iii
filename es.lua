@@ -2,17 +2,17 @@ print("early earthsea")
 print("- left column sets midi channel")
 
 grid_led_all(0)
-grid_led(0,0,3)
+grid_led(1,1,3)
 grid_refresh()
 
-ch = 0
+ch = 1
 
 grid = function(x,y,z)
-	if x==0 then
+	if x==1 then
 		if z then
-			grid_led(0,ch,0)
+			grid_led(1,ch,0)
 			ch=y
-			grid_led(0,ch,3)
+			grid_led(1,ch,3)
 			grid_refresh()	
 		end
 	else

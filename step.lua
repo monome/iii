@@ -26,10 +26,9 @@ end
 
 grid = function(x,y,z)
 	if z==0 then return end
-	if y==0 then
+	if y==1 then
 		-- top row
 	else
-		x = x+1
 		if note[x] == y then note[x] = 0
 		else note[x] = y end
 		redraw()
@@ -38,10 +37,10 @@ end
 
 redraw = function()
 	grid_led_all(0)
-	grid_led(step-1,0,5)
+	grid_led(step,1,5)
 	for n=1,16 do
 		if note[n] > 0 then
-			grid_led(n-1,note[n],step==n and 15 or 5)
+			grid_led(n,note[n],step==n and 15 or 5)
 		end
 	end
 	grid_refresh()
