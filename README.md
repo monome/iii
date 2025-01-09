@@ -46,9 +46,11 @@ _note: we're working on extending `diii` (the text interface) to include some am
 
 - Download the [most recent firmware for your specific device](https://github.com/monome/iii/releases) (Note that grids from 2022 have a different LED driver and hence require a different firmware. Identify the PCB revision by checking the date on the corner).
 - Remove the bottom screws.
-- Locate the golden pushbutton near the USB port. Hold it down while connecting the grid to a computer.
+- Locate the golden pushbutton near the USB port. Hold it down while connecting the grid to a computer. This will start the device in bootloader mode.
 - A USB drive will enumerate. Download the appropriate firmware listed below and copy the file to this drive. The drive will unmount immediately upon copying the file (on macOS this may cause a benign alert).
 - Disconnect and put the screws back on (make sure to place the spacers first).
+
+For firmware _updates_ you can use the `diii` command `^^b` to reboot the device into bootloader mode without opening the unit again.
 
 ## undo
 
@@ -97,6 +99,7 @@ A few quick commands:
 ^^c         clear script
 ^^z         reboot script
 ^^r         reboot device
+^^b         reboot into bootloader mode
 ```
 
 To upload a script:
