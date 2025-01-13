@@ -230,7 +230,7 @@ ps("i am %s and i like the number %d", "awake", 3) -- "i am awake and i like the
 
 `linlin(slo,shi,dlo,dhi,f)` linearly maps value `f` from one range to another range.
 
-`wrap(n.min.max)` wraps integer `n` to a positive `min`/`max` range.
+`wrap(n,min,max)` wraps integer `n` to a positive `min`/`max` range.
 
 
 ## TODO
