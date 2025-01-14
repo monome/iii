@@ -61,9 +61,12 @@ To go back to the original firmware, see [these instructions](https://monome.org
 The "mode" is indicated by the startup light pattern.
 
 - particles: this is standard monome/serial mode, compatible with norns, serialosc, ansible, etc.
-- plasma: iii mode with a blank script. Note that if a script is present in flash, the plasma will not be shown as the script will launch immediately.
+- plasma: iii mode with a blank script.
+- something else: previously uploaded iii script.
 
-To change the mode, hold down key 0,0 (top left) while powering up the device. If a script is currently stored (or locking up the device) holding the 'change mode' key while booting will erase the script and start iii clean. If the 'change mode' key is held while booting with a blank script, it will toggle into monome/serial mode.
+To change the mode, hold down key 0,0 (top left) while powering up the device.
+
+To force-clear a script, switch _into_ iii mode while holding down the key for two full seconds. (This may be helpful for debugging a locked-up script).
 
 ## diii
 
