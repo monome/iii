@@ -147,6 +147,8 @@ flash_write(index,string)
 flash_clear(index)
 
 -- utils
+grid_size_x()
+grid_size_y()
 dostring()
 get_time()
 ps(formatted_string,...)
@@ -244,7 +246,6 @@ ps("i am %s and i like the number %d", "awake", 3) -- "i am awake and i like the
 
 ## TODO
 
-- grid id and size query
 - midi helpers
   - send
   - receive
