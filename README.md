@@ -64,7 +64,7 @@ The "mode" is indicated by the startup light pattern.
 - plasma: iii mode with a blank script.
 - something else: previously uploaded iii script.
 
-To change the mode, hold down key 0,0 (top left) while powering up the device.
+To change the mode, hold down key 1,1 (top left) while powering up the device.
 
 To force-clear a script, switch _into_ iii mode while holding down the key for two full seconds. (This may be helpful for debugging a locked-up script).
 
@@ -234,6 +234,12 @@ ps("i am %s and i like the number %d", "awake", 3) -- "i am awake and i like the
 `linlin(slo,shi,dlo,dhi,f)` linearly maps value `f` from one range to another range.
 
 `wrap(n,min,max)` wraps integer `n` to a positive `min`/`max` range.
+
+
+## notes
+
+- Lua is 1-indexed, so grid coordinates start at 1,1, and metro indexes also start at 1.
+- Script size is currently limited to 32k. (This could change if needed).
 
 
 ## TODO
