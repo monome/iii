@@ -20,10 +20,6 @@ tick = function()
 	redraw()
 end
 
-metro = function(index, count)
-	tick()
-end
-
 grid = function(x,y,z)
 	if z==0 then return end
 	if y==1 then
@@ -60,7 +56,7 @@ end
 
 if not midi_clock_in then
 	-- 150ms per step
-	metro_set(1, 150)
+	metro.new(tick, 150)
 end
 
 redraw()

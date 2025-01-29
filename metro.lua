@@ -4,16 +4,20 @@ grid_refresh()
 
 blink = 0
 
-metro = function(index, count)
-	if index==3 then 
-		grid_led(0,0,blink)
-		blink = 10 - blink
-	else
-		grid_led(count,index,3)
-	end
+c = function(x,y)
+	grid_led_rel(x,y,2)
 	grid_refresh()
 end
 
-metro_set(1, 100, 6)
-metro_set(2, 50, 12)
-metro_set(3, 333)
+b = function()
+	blink = 1-blink
+	grid_led(1,1,blink*15)
+	grid_refresh()
+end
+
+bb = metro.new(b,250)
+
+c1 = metro.new(function(x) c(x,2) end, 100, 11)
+c2 = metro.new(function(x) c(x,3) end, 270, 15)
+c3 = metro.new(function(x) c(x%16,4) end, 220, 33)
+c4 = metro.new(function(x) c(x%12,5) end, 70, 111 )
