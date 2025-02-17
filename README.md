@@ -127,28 +127,35 @@ Note that there is no `init()` or similar. The script is simply run from the sta
 `help()` will display a built-in quick reference which is stored on the device itself (and _should_ match capabilities and syntax).
 
 ```
--- callbacks
-grid(x,y,z)
-midi_rx(ch,status,data1,data2)
-metro(index,stage)
-
--- functions
+-- grid
+(event) grid(x,y,z)
 grid_led_all(z)
 grid_led(x,y,z)
+grid_led_rel(x,y,z,zmin,zmax)
+grid_led_get(x,y)
 grid_refresh()
+grid_size_x()
+grid_size_y()
+
+-- midi
+(event) midi_rx(ch,status,data1,data2)
 midi_note_on(note,vel,ch)
 midi_note_off(note,vel,ch)
 midi_cc(cc,val,ch)
 midi_tx(ch,status,data1,data2)
-metro_set(index,time,stages)
-metro_stop(index)
-flash_read(index)
-flash_write(index,string)
-flash_clear(index)
+
+-- metro
+id = metro.new(callback, time_ms, count_optional)
+metro.stop(id)
+-- slew
+id = slew.new(callback, start_val, end_val, time_ms, quant)
+slew.stop(id)
+
+-- pset
+table = pset_read(index)
+pset_write(index, table)
 
 -- utils
-grid_size_x()
-grid_size_y()
 dostring()
 get_time()
 ps(formatted_string,...)
@@ -167,7 +174,15 @@ function grid(x,y,z) -- callback for grid keypresses. example to print key data:
 end
 ```
 
-`grid_led_all` and `grid_led` queue LED state changes which will be seen with the next `grid_refresh`. All 1-indexed.
+**LEDs**
+
+Drawing queues LED state changes which will be seen with the next `grid_refresh()`. Coordinates are all 1-indexed (meaning `(1,1)` is the top-left corner):
+
+- `grid_led_all(z)`: set all LEDs to `z`
+- `grid_led(x,y,z)`: set the LED at `(x, y)` to `z`
+- `grid_led_rel(x,y,z,zmin,zmax)`: move relative to the last LED command
+
+Additionally, `grid_led_get(x,y)` returns the level of the LED at `(x,y)`.
 
 ### midi
 
@@ -177,19 +192,60 @@ end
 
 ### metro
 
-`metro(index,stage)` is the one callback for timed metronome objects. Right now the system supports 8 metros (we need to stress-test stability). Separate actions should happen per index, ie:
+The system supports fifteen timed metronome objects.
+
+`id = metro.new(callback, time_ms, count_optional)`
+
+- `id`: an alias for our metronome
+- `callback`: a function called on every metronome tick, passing the current stage with each execution
+- `time_ms`: the interval (in milliseconds) to execute each tick
+- `count`: (optional) the number of ticks to execute
+  - if `count` is omitted or set to `-1`, the metro will repeat indefinitely
+
+For example:
+
+```lua
+example_metro = metro.new(
+  function(stage)
+    print(stage)
+  end,
+  1000, -- interval of 1000ms
+  2 -- execute the callback twice
+)
+print(example_metro)
+```
+
+Running the code above will result in:
 
 ```
-function metro(index,stage)
-  if(index==1) then print("hi")
-  else print("bye") end
-end
+1
+2
 ```
 
-Set and start a metro with `metro_set(index, time, stages)`.
+Note that when a metro is created, it is automatically started.
 
-- if `stages` is omitted or set to -1 the metro will repeat indefinitely
-- if `time` is set to 0 the timer will be stopped (if running)
+Stop a running metro with `metro.stop(id)`.
+
+### slew
+
+Use `slew` to smoothly count between two values over a specified time.
+
+`id = slew.new(callback, start_val, end_val, time_ms, quant)`
+
+- `id`: an alias for our slew
+- `callback`: a function called on every increment, passing the current value with each execution
+- `start_val`: our starting value
+- `end_val`: our destination value
+- `time_ms`: how many milliseconds the journey from our starting value to the destination value will take
+- `quant`: (optional) the granularity between each interim value
+  - if `quant` is omitted, values will change by `1`
+
+For backwards movement, make `start_val` greater than `end_val`.
+
+Stop a running slew with `slew.stop(id)`.  
+Stop all running slews with `slew.stopall()`.
+
+See [slew.lua](https://github.com/monome/iii/blob/250201/slew.lua) for an example.
 
 ### flash
 
@@ -215,7 +271,28 @@ flash_write(0,preset)
 x = dostring(flash_read(0)) -- recall a preset
 ```
 
+### presets
+
+Scripts can store and recall tables of data into/from the RP2040's flash storage, using a simple 'preset' mechanism:
+
+- `pset_write(n,table)`: writes `table` to flash position `n`
+- `pset_read(n)`: returns the table stored at flash position `n`
+
+#### as of release `250201`
+
+The `pset` functions need a bit more design work -- these slots have no awareness of which script wrote them or if the tables will be valid for the current script.
+
+Each flash slot (there are 256 of them) can be cleared with `flash_clear(id)`.
+
+To clear every flash slot, run this command:
+
+```lua
+for i=1,256 do flash_clear(i) end
+```
+
 ### utils
+
+`device_id()` returns the string name of the connected device.
 
 `dostring(cmd)` executes the string cmd. *Be careful.*
 
@@ -237,12 +314,10 @@ ps("i am %s and i like the number %d", "awake", 3) -- "i am awake and i like the
 
 `wrap(n,min,max)` wraps integer `n` to a positive `min`/`max` range.
 
-
 ## notes
 
-- Lua is 1-indexed, so grid coordinates start at 1,1, and metro indexes also start at 1.
+- Lua is 1-indexed, so grid coordinates start at 1,1, and metro indices also start at 1.
 - Script size is currently limited to 32k. (This could change if needed).
-
 
 ## TODO
 
@@ -251,7 +326,6 @@ ps("i am %s and i like the number %d", "awake", 3) -- "i am awake and i like the
   - receive
   - clock division
 - table serializer ie http://lua-users.org/wiki/TableSerialization
-
 
 ## contributing
 
