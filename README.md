@@ -84,8 +84,6 @@ sudo pip3 install monome-diii
 
 ### run
 
-**_ALERT_ - things get really weird/broken when serialosc (the service / daemon) and `diii` are running at the same time, or when multiple copies of `diii` are running. Be aware!**
-
 For ease of managing scripts, navigate to the folder with your iii scripts ie:
 
 ```
