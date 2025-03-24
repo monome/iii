@@ -2,7 +2,7 @@
 
 # iii
 
-_note: This documentation is transitional as we work this all out. It's going to change._
+_note: we're approaching version 1.0.0. some features may change before then!_
 
 An evolution of capabilities for monome grids, where an interactive scripting environment runs on the device itself.
 
@@ -15,24 +15,9 @@ An evolution of capabilities for monome grids, where an interactive scripting en
 
 The grid was originally conceived of as "doing nothing by itself" without being connected to a computer running a program. Now, the tiny computer inside the grid (RP2040) is capable enough of doing some interesting things. We're hoping this means in some cases simply requiring less complexity (as in, a specialized eurorack module or DAW plugin or tricky command line framework). It also provides the possibility to connect to less-general-purpose computers (like phones) who prefer MIDI.
 
-That said! The original method of interfacing via norns or serialosc (and any of the [various languages and environments](https://monome.org/docs/grid/grid-computer/)) is a fundamentally excellent approach. iii fills a small gap.
+That said, the original method of interfacing via norns or serialosc (and any of the [various languages and environments](https://monome.org/docs/grid/grid-computer/)) is a fundamentally excellent approach. iii fills a small gap.
 
 The new firmware is capable of toggling between iii and monome/serial modes.
-
-## why NOT do this
-
-This is alpha software and such:
-
-- there are bugs, almost certainly
-- there are limitations we know about
-- there are limitations we haven't yet identified
-- initial documentation and examples are sparse
-
-Furthermore we're not looking at this (yet) as part of the product: as such it has no promised functionality, a warranty, or a timeline to become official.
-
-Practically speaking: the grid is a very constrained device when it comes to user interface. In a typical norns script or Max patch, there is helpful text and interface details that assist with the navigation of a blank grid. An iii script running on the device itself will require some clever design to accommodate the minimal interface.
-
-_note: we're working on extending `diii` (the text interface) to include some amount of interface display and OSC exchange, which may serve some of these needs._
 
 ## compatibility
 
@@ -54,7 +39,7 @@ For firmware _updates_ you can use the `diii` command `^^b` to reboot the device
 
 ## undo
 
-To go back to the original firmware, see [these instructions](https://monome.org/docs/grid/firmware/).
+In theory the monome/serial compatibility layer is functionally identical to the previous firmware but even so, to go back to the original firmware see [these instructions](https://monome.org/docs/grid/firmware/).
 
 ## modes
 
@@ -259,16 +244,6 @@ cmd = flash_read(0)
 dostring(cmd) -- prints the message!
 ```
 
-TODO: we need to add a table serializer. Because flash is just blocks of bytes (text), ie:
-
-```
-x = {20,22,26,29}
-preset = table_serialize(x) -- preset now is the string "{20,22,26,29}" 
-flash_write(0,preset)
-(...)
-x = dostring(flash_read(0)) -- recall a preset
-```
-
 ### presets
 
 Scripts can store and recall tables of data into/from the RP2040's flash storage, using a simple 'preset' mechanism:
@@ -323,7 +298,6 @@ ps("i am %s and i like the number %d", "awake", 3) -- "i am awake and i like the
   - send
   - receive
   - clock division
-- table serializer ie http://lua-users.org/wiki/TableSerialization
 
 ## contributing
 
@@ -331,4 +305,4 @@ Small Lua tests and docs fixes welcome. Also suggestions for inclusion in the co
 
 Discussion happens at the [repository](https://github.com/monome/iii/discussions).
 
-_note: this repository is not for the firmware itself, which we have not yet determined how / if to license._
+_note: this repository is not for the firmware itself, which we have not yet determined the license._
