@@ -120,6 +120,14 @@ grid_refresh()
 grid_size_x()
 grid_size_y()
 
+-- arc
+(event) arc(n,d)
+(event) arc_key(z)
+arc_led(x,y,z)
+arc_led_rel(x,y,z,zmin,zmax) -- adds z to current value, zmin/zmax optional
+arc_led_all(x,z)
+arc_refresh()
+
 -- midi
 (event) midi_rx(ch,status,data1,data2)
 midi_note_on(note,vel,ch)
