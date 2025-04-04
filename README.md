@@ -123,9 +123,9 @@ grid_size_y()
 -- arc
 (event) arc(ring, delta)
 (event) arc_key(z)
-arc_led(ring, led, val)
-arc_led_rel(ring, led, val, val_min, val_max) -- adds val to current value, val_min/val_max optional
-arc_led_all(ring, val)
+arc_led(ring, led, level)
+arc_led_rel(ring, led, level, level_min, level_max) -- adds level to current value, level_min/level_max optional
+arc_led_all(ring, level)
 arc_refresh()
 
 -- midi
