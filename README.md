@@ -123,6 +123,7 @@ grid_size_y()
 -- arc
 (event) arc(ring, delta)
 (event) arc_key(z)
+arc_res(ring, div) -- sets knob tick division (sensitivity) 1-1024, 1 = max resolution
 arc_led(ring, led, level)
 arc_led_rel(ring, led, level, level_min, level_max) -- adds level to current value, level_min/level_max optional
 arc_led_all(ring, level)
